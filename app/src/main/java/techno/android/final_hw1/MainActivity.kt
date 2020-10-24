@@ -2,25 +2,24 @@ package techno.android.final_hw1
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import techno.android.final_hw1.fragments.numberCard.NumberCard
+import techno.android.final_hw1.models.NumberItem
 
-/**
- * Skeleton of an Android Things activity.
- *
- * Android Things peripheral APIs are accessible through the PeripheralManager
- * For example, the snippet below will open a GPIO pin and set it to HIGH:
- *
- * val manager = PeripheralManager.getInstance()
- * val gpio = manager.openGpio("BCM6").apply {
- *     setDirection(Gpio.DIRECTION_OUT_INITIALLY_LOW)
- * }
- * gpio.value = true
- *
- * You can find additional examples on GitHub: https://github.com/androidthings
- */
+
 class MainActivity: AppCompatActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
+		Log.d("main on create", "start SUPER START")
 		super.onCreate(savedInstanceState)
+		Log.d("main on create", "after super")
 		setContentView(R.layout.activity_main)
+		Log.d("main on create", "savedInstanceState: $savedInstanceState")
+		if (savedInstanceState == null) {
+			Log.d("main on create", "in if")
+			supportFragmentManager.beginTransaction()
+				.replace(R.id.fragment_slot, NumberCard().set(item = NumberItem(15)))
+				.commitAllowingStateLoss()
+		}
 	}
 }
