@@ -85,7 +85,8 @@ class NumberList : Fragment() {
     // internal
     private fun addItem() {
         listAdapter.addItem()
-        recycler.scrollToPosition(listAdapter.itemCount - 1)
+        itemCount = listAdapter.getRealItemCount()
+        recycler.scrollToPosition(listAdapter.getRealItemCount())
     }
 
     // support

@@ -19,6 +19,7 @@ class NumberViewHolder(
 
     private val button = itemView.findViewById<Button>(R.id.number_list_item)
 
+    // public
     fun addMode(): NumberViewHolder {
         button.setOnClickListener { onClickClickAddItem() }
         return setAddIcon()
@@ -35,24 +36,29 @@ class NumberViewHolder(
         return this
     }
 
+    fun resetButton(): NumberViewHolder {
+        with(button) {
+            text = ""
+            setTextColor(0)
+            setBackgroundResource(0)
+            setOnClickListener(null)
+        }
+        return this
+    }
+
+    // private
     private fun updateButtonInfo(): NumberViewHolder {
         with(button) {
             text = itemModel.number.toString()
             setTextColor(itemModel.color)
+            setBackgroundColor(context.getColor(R.color.grey))
         }
         return this
     }
 
     private fun setAddIcon(): NumberViewHolder {
-        button.setBackgroundResource(R.drawable.ic_baseline_add_24)
-        return this
-    }
-
-    fun resetButton(): NumberViewHolder {
         with(button) {
-            text = ""
-            setTextColor(0)
-            setOnClickListener(null)
+            setBackgroundResource(R.drawable.ic_baseline_add_24)
         }
         return this
     }
