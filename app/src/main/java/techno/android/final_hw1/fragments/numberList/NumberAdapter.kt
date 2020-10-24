@@ -1,6 +1,5 @@
 package techno.android.final_hw1.fragments.numberList
 
-import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import techno.android.final_hw1.models.NumberItem
