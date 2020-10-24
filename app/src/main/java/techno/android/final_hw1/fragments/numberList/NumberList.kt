@@ -17,9 +17,14 @@ typealias OnClickNumItem = (itemModel: NumberItem) -> Unit
 typealias OnClickAddItem = () -> Unit
 
 class NumberList : Fragment() {
+
+    companion object {
+        const val MIN_VALUE = 0
+    }
+
     private var itemCount: Int = 10
         set(value) {
-            field = if (value < 0) 0 else value
+            field = if (value < MIN_VALUE) MIN_VALUE else value
         }
     private lateinit var listAdapter: NumberAdapter
     private lateinit var onClickNumItem: OnClickNumItem
@@ -27,15 +32,10 @@ class NumberList : Fragment() {
 
     private /* lateinit */ var columnNum: Int = 0
 
-    init {
-        Log.d("number list", "created!")
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val orientation = resources.configuration.orientation
         columnNum = if (orientation == Configuration.ORIENTATION_PORTRAIT) 3 else 4
-        Log.d("number list", "attached!")
     }
 
     fun initListAdapter(
@@ -74,7 +74,6 @@ class NumberList : Fragment() {
     }
 
     private fun addItem() {
-        Log.d("number list", "add item")
         listAdapter.addItem()
         recycler.scrollToPosition(listAdapter.itemCount - 1)
     }

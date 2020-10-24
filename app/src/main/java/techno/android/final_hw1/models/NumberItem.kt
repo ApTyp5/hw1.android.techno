@@ -2,7 +2,6 @@ package techno.android.final_hw1.models
 
 import android.graphics.Color
 
-
 class NumberItem(initNumber: Int) {
 
     var color: Int = 0
@@ -17,6 +16,7 @@ class NumberItem(initNumber: Int) {
         }
 
     init {
+        // setter is not called during initialization, but I need it
         number = initNumber
     }
 }

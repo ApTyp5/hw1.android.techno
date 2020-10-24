@@ -31,7 +31,6 @@ class NumberAdapter(
     }
 
     fun addItem(): NumberAdapter {
-        Log.d("adapter", "add item")
         val value = itemCount
         val pos = itemCount - 1
         items.add(value)
