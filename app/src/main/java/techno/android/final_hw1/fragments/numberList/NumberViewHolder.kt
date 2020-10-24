@@ -7,7 +7,12 @@ import androidx.recyclerview.widget.RecyclerView
 import techno.android.final_hw1.R
 import techno.android.final_hw1.models.NumberItem
 
-class NumberViewHolder(parent: ViewGroup, private val itemModel: NumberItem):
+class NumberViewHolder(
+    parent: ViewGroup,
+    private val itemModel: NumberItem,
+    private val onClickClickAddItem: OnClickAddItem,
+    private val onClickNumNumItem: OnClickNumItem,
+) :
     RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
     ) {
@@ -15,6 +20,7 @@ class NumberViewHolder(parent: ViewGroup, private val itemModel: NumberItem):
     private val button = itemView.findViewById<Button>(R.id.number_list_item)
 
     fun addMode(): NumberViewHolder {
+        button.setOnClickListener { onClickClickAddItem() }
         return setAddIcon()
     }
 
@@ -25,25 +31,29 @@ class NumberViewHolder(parent: ViewGroup, private val itemModel: NumberItem):
 
     fun numberMode(): NumberViewHolder {
         updateButtonInfo()
+        button.setOnClickListener { onClickNumNumItem(itemModel) }
         return this
     }
 
     private fun updateButtonInfo(): NumberViewHolder {
-        button.text = itemModel.number.toString()
-        button.setTextColor(itemModel.color)
+        with(button) {
+            text = itemModel.number.toString()
+            setTextColor(itemModel.color)
+        }
         return this
     }
 
     private fun setAddIcon(): NumberViewHolder {
-        clearButton()
         button.setBackgroundResource(R.drawable.ic_baseline_add_24)
         return this
     }
 
-    private fun clearButton(): NumberViewHolder {
-        button.text = ""
-        button.setTextColor(0)
-        button.background = null
+    fun resetButton(): NumberViewHolder {
+        with(button) {
+            text = ""
+            setTextColor(0)
+            setOnClickListener(null)
+        }
         return this
     }
 }

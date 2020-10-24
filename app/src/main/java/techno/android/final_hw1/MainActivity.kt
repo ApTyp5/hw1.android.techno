@@ -18,11 +18,21 @@ class MainActivity: AppCompatActivity() {
 		Log.d("main on create", "savedInstanceState: $savedInstanceState")
 		if (savedInstanceState == null) {
 			Log.d("main on create", "in if")
-			val fragment = NumberList()
-//			val fragment = NumberCard().set(NumberItem(13))
+			val list = NumberList()
+				.set(initItemCount = 100)
+				.set(initOnClickNumItem = {itemModel ->  showNumberCard(itemModel)})
+				.initListAdapter()
+
 			supportFragmentManager.beginTransaction()
-				.replace(R.id.fragment_slot, fragment)
+				.replace(R.id.fragment_slot, list)
 				.commit()
 		}
+	}
+
+	private fun showNumberCard(item: NumberItem) {
+		supportFragmentManager.beginTransaction()
+			.addToBackStack(getString(R.string.show_card_transaction_name))
+			.replace(R.id.fragment_slot, NumberCard().set(item))
+			.commit()
 	}
 }

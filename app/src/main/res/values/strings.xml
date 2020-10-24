@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Homework I</string>
+    <string name="show_card_transaction_name">card</string>
 </resources>
