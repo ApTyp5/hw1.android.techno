@@ -3,7 +3,6 @@ package techno.android.final_hw1.fragments.numberList
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,26 +17,16 @@ typealias OnClickAddItem = () -> Unit
 
 class NumberList : Fragment() {
 
-    companion object {
-        const val MIN_VALUE = 0
-    }
-
-    private var itemCount: Int = 10
+    private var itemCount: Int = DEFAULT_ITEM_COUNT
         set(value) {
             field = if (value < MIN_VALUE) MIN_VALUE else value
         }
     private lateinit var listAdapter: NumberAdapter
     private lateinit var onClickNumItem: OnClickNumItem
     private lateinit var recycler: RecyclerView
-
     private /* lateinit */ var columnNum: Int = 0
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val orientation = resources.configuration.orientation
-        columnNum = if (orientation == Configuration.ORIENTATION_PORTRAIT) 3 else 4
-    }
-
+    // public
     fun initListAdapter(
         initItemCount: Int? = null,
         initOnClickNumItem: OnClickNumItem? = null
@@ -58,6 +47,13 @@ class NumberList : Fragment() {
         return this
     }
 
+    // callbacks
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        val orientation = resources.configuration.orientation
+        columnNum = if (orientation == Configuration.ORIENTATION_PORTRAIT) 3 else 4
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -68,13 +64,34 @@ class NumberList : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recycler = view.findViewById(R.id.number_list)
-        recycler.layoutManager = GridLayoutManager(view.context, columnNum)
-        recycler.adapter = listAdapter
+        recycler = view.findViewById<RecyclerView>(R.id.number_list).apply {
+            layoutManager = GridLayoutManager(view.context, columnNum)
+            adapter = listAdapter
+        }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        savedInstanceState?.let {
+            itemCount = it.getInt(ITEM_COUNT)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(ITEM_COUNT, itemCount)
+    }
+
+    // internal
     private fun addItem() {
         listAdapter.addItem()
         recycler.scrollToPosition(listAdapter.itemCount - 1)
+    }
+
+    // support
+    companion object {
+        const val MIN_VALUE = 0
+        const val DEFAULT_ITEM_COUNT = 10
+        const val ITEM_COUNT = "number-list-item-count"
     }
 }
