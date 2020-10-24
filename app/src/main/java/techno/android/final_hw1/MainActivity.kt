@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import techno.android.final_hw1.fragments.numberCard.NumberCard
+import techno.android.final_hw1.fragments.numberList.NumberList
 import techno.android.final_hw1.models.NumberItem
 
 
@@ -17,9 +18,11 @@ class MainActivity: AppCompatActivity() {
 		Log.d("main on create", "savedInstanceState: $savedInstanceState")
 		if (savedInstanceState == null) {
 			Log.d("main on create", "in if")
+			val fragment = NumberList()
+//			val fragment = NumberCard().set(NumberItem(13))
 			supportFragmentManager.beginTransaction()
-				.replace(R.id.fragment_slot, NumberCard().set(item = NumberItem(15)))
-				.commitAllowingStateLoss()
+				.replace(R.id.fragment_slot, fragment)
+				.commit()
 		}
 	}
 }
