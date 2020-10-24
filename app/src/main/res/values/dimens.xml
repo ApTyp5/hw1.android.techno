@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text">100sp</dimen>
+    <dimen name="action_text">100sp</dimen>
     <dimen name="list_item_text">40sp</dimen>
     <dimen name="list_item">80dp</dimen>
 </resources>
